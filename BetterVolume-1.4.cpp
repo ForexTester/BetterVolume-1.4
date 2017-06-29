@@ -1,11 +1,35 @@
-//---------------------------------------------------------------------------
-// Better Volume 1.4
-//---------------------------------------------------------------------------
+/// @file BetterVolume-1.4.cpp
+/// @author Copyright 2017, Egor Pervuninski
+/// @brief Better Volume 1.4 indicator
+
+//-----------------------------------------------------------------------------
+// Copyright 2017 Egor Pervuninski
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #include <windows.h>
 #include <cmath>
 #include "IndicatorInterfaceUnit.h"
 #include "TechnicalFunctions.h"
+
+//-----------------------------------------------------------------------------
 
 // External variables
 int NumberOfBars;
@@ -15,9 +39,9 @@ int LookBack;
 // Buffers
 TIndexBuffer red, blue, yellow, green, white, magenta, v4;
 
-//---------------------------------------------------------------------------
-// Initialize indicator
-//---------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+/// @brief Initialize indicator
 EXPORT void __stdcall Init() {
 	// define properties
 	IndicatorShortName("Better Volume 1.4");
@@ -78,9 +102,9 @@ EXPORT void __stdcall Init() {
 	SetIndexLabel(6, "Average(MA Period)");
 }
 
-//---------------------------------------------------------------------------
-// Calculate requested bar
-//---------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+/// @brief Calculate requested bar
 EXPORT void __stdcall Calculate(int i) {
 	double VolLowest, Range, Value2, Value3, HiValue2, HiValue3, LoValue3, tempv2, tempv3, tempv;
 
@@ -105,8 +129,7 @@ EXPORT void __stdcall Calculate(int i) {
 	
 	v4[i] = round(tempv / MAPeriod); //NormalizeDouble(tempv / MAPeriod, 0);
 
-
-	for (int n = i; n<i + LookBack; n++) {
+	for (int n = i; n < i + LookBack; n++) {
 		tempv2 = Volume(n) * ((High(n) - Low(n)));
 		if (tempv2 >= HiValue2) { HiValue2 = tempv2; }
 
@@ -117,7 +140,7 @@ EXPORT void __stdcall Calculate(int i) {
 		}
 	}
 
-	if (Value2 == HiValue2  && Close(i) >(High(i) + Low(i)) / 2) {
+	if (Value2 == HiValue2  && Close(i) > (High(i) + Low(i)) / 2) {
 		red[i] = round(Volume(i)); //NormalizeDouble(Volume[i], 0);
 		blue[i] = 0;
 		yellow[i] = 0;
@@ -148,3 +171,5 @@ EXPORT void __stdcall Calculate(int i) {
 	}
 
 }
+
+//-----------------------------------------------------------------------------
