@@ -20,7 +20,7 @@ TIndexBuffer red, blue, yellow, green, white, magenta, v4;
 //---------------------------------------------------------------------------
 EXPORT void __stdcall Init() {
 	// define properties
-	IndicatorShortName("BetterVolume 1.4");
+	IndicatorShortName("Better Volume 1.4");
 	SetOutputWindow(ow_SeparateWindow);
 
 	// register options
