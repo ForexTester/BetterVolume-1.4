@@ -1,0 +1,15 @@
+version: 1.4.{build}
+
+image: Visual Studio 2017
+
+configuration: Debug
+
+platform: x86
+
+build:
+  project: ForexTester-BetterVolume-1.4.sln
+  verbosity: minimal
+
+artifacts:
+- path: Debug\ForexTester-BetterVolume-1.4.dll
+  name: ForexTester-BetterVolume-1.4.dll
