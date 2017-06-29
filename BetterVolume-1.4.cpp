@@ -8,7 +8,6 @@
 #include "TechnicalFunctions.h"
 
 // External variables
-
 int NumberOfBars;
 int MAPeriod;
 int LookBack;
