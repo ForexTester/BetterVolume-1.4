@@ -82,86 +82,71 @@ EXPORT void __stdcall Init() {
 //---------------------------------------------------------------------------
 // Calculate requested bar
 //---------------------------------------------------------------------------
-EXPORT void __stdcall Calculate(int index) {
-
+EXPORT void __stdcall Calculate(int i) {
 	double VolLowest, Range, Value2, Value3, HiValue2, HiValue3, LoValue3, tempv2, tempv3, tempv;
-	int limit;
+
+	red[i] = 0; blue[i] = Volume(i); yellow[i] = 0; green[i] = 0; white[i] = 0; magenta[i] = 0;
+	Value2 = 0; Value3 = 0; HiValue2 = 0; HiValue3 = 0; LoValue3 = 99999999; tempv2 = 0; tempv3 = 0; tempv = 0;
+
+
+	VolLowest = Volume(iLowest(NULL, 0, MODE_VOLUME, 20, i));
 	
-//	int counted_bars = IndicatorCounted();
-	//---- last counted bar will be recounted
-//	if (counted_bars>0) counted_bars--;
-//	if (NumberOfBars == 0)
-//		NumberOfBars = Bars - counted_bars;
-//	limit = NumberOfBars; //Bars-counted_bars;
-
-	limit = Bars();
-
-	for (int i = 0; i < limit; i++) {
-		red[i] = 0; blue[i] = Volume(i); yellow[i] = 0; green[i] = 0; white[i] = 0; magenta[i] = 0;
-		Value2 = 0; Value3 = 0; HiValue2 = 0; HiValue3 = 0; LoValue3 = 99999999; tempv2 = 0; tempv3 = 0; tempv = 0;
-
-
-		VolLowest = Volume(iLowest(NULL, 0, MODE_VOLUME, 20, i));
-		if (Volume(i) == VolLowest) {
-			yellow[i] = round(Volume(i));//NormalizeDouble(Volume(i), 0);
-			blue[i] = 0;
-		}
-
-		Range = (High(i) - Low(i));
-		Value2 = Volume(i) * Range;
-
-		if (Range != 0)
-			Value3 = Volume(i) / Range;
-
-
-		for (int n = i; n < i + MAPeriod; n++) {
-			tempv = Volume(n) + tempv;
-		}
-		v4[i] = round(tempv / MAPeriod);//NormalizeDouble(tempv / MAPeriod, 0);
-
-
-		for (int n = i; n<i + LookBack; n++) {
-			tempv2 = Volume(n) * ((High(n) - Low(n)));
-			if (tempv2 >= HiValue2) { HiValue2 = tempv2; }
-
-			if (Volume(n) * ((High(n) - Low(n))) != 0) {
-				tempv3 = Volume(n) / ((High(n) - Low(n)));
-				if (tempv3 > HiValue3) { HiValue3 = tempv3; }
-				if (tempv3 < LoValue3) { LoValue3 = tempv3; }
-			}
-		}
-
-		if (Value2 == HiValue2  && Close(i) >(High(i) + Low(i)) / 2) {
-			red[i] = round(Volume(i));//NormalizeDouble(Volume[i], 0);
-			blue[i] = 0;
-			yellow[i] = 0;
-		}
-
-		if (Value3 == HiValue3)
-		{
-			green[i] = round(Volume(i));//NormalizeDouble(Volume[i], 0);
-			blue[i] = 0;
-			yellow[i] = 0;
-			red[i] = 0;
-		}
-		if (Value2 == HiValue2 && Value3 == HiValue3)
-		{
-			magenta[i] = round(Volume(i));//NormalizeDouble(Volume[i], 0);
-			blue[i] = 0;
-			red[i] = 0;
-			green[i] = 0;
-			yellow[i] = 0;
-		}
-		if (Value2 == HiValue2  && Close(i) <= (High(i) + Low(i)) / 2)
-		{
-			white[i] = round(Volume(i));//NormalizeDouble(Volume[i], 0);
-			magenta[i] = 0;
-			blue[i] = 0;
-			red[i] = 0;
-			green[i] = 0;
-			yellow[i] = 0;
-		}
-
-
+	if (Volume(i) == VolLowest) {
+		yellow[i] = round(Volume(i)); //NormalizeDouble(Volume(i), 0);
+		blue[i] = 0;
 	}
+
+	Range = (High(i) - Low(i));
+	Value2 = Volume(i) * Range;
+
+	if (Range != 0) { Value3 = Volume(i) / Range; }
+
+	for (int n = i; n < i + MAPeriod; n++) {
+		tempv = Volume(n) + tempv;
+	}
+	
+	v4[i] = round(tempv / MAPeriod); //NormalizeDouble(tempv / MAPeriod, 0);
+
+
+	for (int n = i; n<i + LookBack; n++) {
+		tempv2 = Volume(n) * ((High(n) - Low(n)));
+		if (tempv2 >= HiValue2) { HiValue2 = tempv2; }
+
+		if (Volume(n) * ((High(n) - Low(n))) != 0) {
+			tempv3 = Volume(n) / ((High(n) - Low(n)));
+			if (tempv3 > HiValue3) { HiValue3 = tempv3; }
+			if (tempv3 < LoValue3) { LoValue3 = tempv3; }
+		}
+	}
+
+	if (Value2 == HiValue2  && Close(i) >(High(i) + Low(i)) / 2) {
+		red[i] = round(Volume(i)); //NormalizeDouble(Volume[i], 0);
+		blue[i] = 0;
+		yellow[i] = 0;
+	}
+
+	if (Value3 == HiValue3) {
+		green[i] = round(Volume(i)); //NormalizeDouble(Volume[i], 0);
+		blue[i] = 0;
+		yellow[i] = 0;
+		red[i] = 0;
+	}
+	
+	if (Value2 == HiValue2 && Value3 == HiValue3) {
+		magenta[i] = round(Volume(i)); //NormalizeDouble(Volume[i], 0);
+		blue[i] = 0;
+		red[i] = 0;
+		green[i] = 0;
+		yellow[i] = 0;
+	}
+	
+	if (Value2 == HiValue2  && Close(i) <= (High(i) + Low(i)) / 2) {
+		white[i] = round(Volume(i)); //NormalizeDouble(Volume[i], 0);
+		magenta[i] = 0;
+		blue[i] = 0;
+		red[i] = 0;
+		green[i] = 0;
+		yellow[i] = 0;
+	}
+
 }
