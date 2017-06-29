@@ -88,7 +88,6 @@ EXPORT void __stdcall Calculate(int i) {
 	red[i] = 0; blue[i] = Volume(i); yellow[i] = 0; green[i] = 0; white[i] = 0; magenta[i] = 0;
 	Value2 = 0; Value3 = 0; HiValue2 = 0; HiValue3 = 0; LoValue3 = 99999999; tempv2 = 0; tempv3 = 0; tempv = 0;
 
-
 	VolLowest = Volume(iLowest(NULL, 0, MODE_VOLUME, 20, i));
 	
 	if (Volume(i) == VolLowest) {
