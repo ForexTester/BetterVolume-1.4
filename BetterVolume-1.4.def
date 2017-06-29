@@ -1,4 +1,4 @@
-LIBRARY BETTERVOLUME-1.4
+LIBRARY ForexTester-BetterVolume-1.4
 
 EXPORTS Init
 	Calculate
