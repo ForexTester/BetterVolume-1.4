@@ -1,0 +1,6 @@
+LIBRARY BETTERVOLUME-1.4
+
+EXPORTS Init
+	Calculate
+	ReplaceStr
+	IntrfProcsRec
