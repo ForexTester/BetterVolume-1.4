@@ -2,7 +2,7 @@ version: 1.4.{build}
 
 image: Visual Studio 2017
 
-configuration: Debug
+configuration: Release
 
 platform: x86
 
