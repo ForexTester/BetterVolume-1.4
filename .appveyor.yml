@@ -11,5 +11,5 @@ build:
   verbosity: minimal
 
 artifacts:
-- path: Debug\ForexTester-BetterVolume-1.4.dll
+- path: Release\ForexTester-BetterVolume-1.4.dll
   name: ForexTester-BetterVolume-1.4.dll
