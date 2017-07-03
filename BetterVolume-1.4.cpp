@@ -114,7 +114,7 @@ EXPORT void __stdcall Calculate(int i) {
 	VolLowest = Volume(iLowest(NULL, 0, MODE_VOLUME, 20, i));
 	
 	if (Volume(i) == VolLowest) {
-		yellow[i] = round(Volume(i)); //NormalizeDouble(Volume(i), 0);
+		yellow[i] = std::trunc(Volume(i)); //NormalizeDouble(Volume(i), 0);
 		blue[i] = 0;
 	}
 
@@ -127,7 +127,7 @@ EXPORT void __stdcall Calculate(int i) {
 		tempv = Volume(n) + tempv;
 	}
 	
-	v4[i] = round(tempv / MAPeriod); //NormalizeDouble(tempv / MAPeriod, 0);
+	v4[i] = std::trunc(tempv / MAPeriod); //NormalizeDouble(tempv / MAPeriod, 0);
 
 	for (int n = i; n < i + LookBack; n++) {
 		tempv2 = Volume(n) * ((High(n) - Low(n)));
@@ -141,20 +141,20 @@ EXPORT void __stdcall Calculate(int i) {
 	}
 
 	if (Value2 == HiValue2  && Close(i) > (High(i) + Low(i)) / 2) {
-		red[i] = round(Volume(i)); //NormalizeDouble(Volume[i], 0);
+		red[i] = std::trunc(Volume(i)); //NormalizeDouble(Volume[i], 0);
 		blue[i] = 0;
 		yellow[i] = 0;
 	}
 
 	if (Value3 == HiValue3) {
-		green[i] = round(Volume(i)); //NormalizeDouble(Volume[i], 0);
+		green[i] = std::trunc(Volume(i)); //NormalizeDouble(Volume[i], 0);
 		blue[i] = 0;
 		yellow[i] = 0;
 		red[i] = 0;
 	}
 	
 	if (Value2 == HiValue2 && Value3 == HiValue3) {
-		magenta[i] = round(Volume(i)); //NormalizeDouble(Volume[i], 0);
+		magenta[i] = std::trunc(Volume(i)); //NormalizeDouble(Volume[i], 0);
 		blue[i] = 0;
 		red[i] = 0;
 		green[i] = 0;
@@ -162,7 +162,7 @@ EXPORT void __stdcall Calculate(int i) {
 	}
 	
 	if (Value2 == HiValue2  && Close(i) <= (High(i) + Low(i)) / 2) {
-		white[i] = round(Volume(i)); //NormalizeDouble(Volume[i], 0);
+		white[i] = std::trunc(Volume(i)); //NormalizeDouble(Volume[i], 0);
 		magenta[i] = 0;
 		blue[i] = 0;
 		red[i] = 0;
